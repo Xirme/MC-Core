@@ -1,0 +1,6 @@
+name: MC-Core
+main: me.xir.mc.plugin.core.MC_Core
+version: 1.0
+website: http://xir.me
+author: Xirme Community Developers
+description: Core plugin for Xirme Community MC that handles all of the things.
