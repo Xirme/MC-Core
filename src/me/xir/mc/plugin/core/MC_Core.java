@@ -15,9 +15,9 @@ public class MC_Core extends JavaPlugin {
 
 	public void onEnable() {
 		MC_Core_Manager.getInstance().setCore(this);
+		loadConfiguration();
 		MC_Core_Manager.getInstance().setServerID(this.getConfig().getInt("general.server-id"));
 		log.info("[MC-Core] is online.");
-		loadConfiguration();
 	}
 	
 	public void loadConfiguration() {
