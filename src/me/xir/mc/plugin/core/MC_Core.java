@@ -9,11 +9,11 @@ public class MC_Core extends JavaPlugin {
 	private final Logger log = Logger.getLogger("Minecraft");
 	
 	public void onDisable() {
-		log.info("[MC-Core] is online.");
+		log.info("[MC-Core] has gone offline.");
 	}
 
 	public void onEnable() {
-		log.info("[MC-Core] has gone offline.");
+		log.info("[MC-Core] is online.");
 	}
 	
 }
