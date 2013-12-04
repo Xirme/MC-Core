@@ -1,4 +1,4 @@
-package me.xir.mc.plugin.commands;
+package me.xir.mc.plugin.core.commands;
 
 public class CommandHandler {
 	
