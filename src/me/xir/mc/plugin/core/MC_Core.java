@@ -25,7 +25,7 @@ public class MC_Core extends JavaPlugin {
 		if (!f.exists()) {
 			log.info("[MC-Core] Generating default configuration.");
 			saveDefaultConfig();
-			log.info("[MC-Core] URGENT: config.yml has default values!");
+			log.warning("[MC-Core] URGENT: config.yml has default values!");
 		} else {
 			log.info("[MC-Core] Configuration file found.");
 			log.info("This is server ID " + serverid + ".");
