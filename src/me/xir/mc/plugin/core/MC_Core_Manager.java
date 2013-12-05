@@ -1,9 +1,12 @@
 package me.xir.mc.plugin.core;
 
+import me.xir.mc.plugin.core.MySQL.MySQL;
+
 public class MC_Core_Manager {
 	
 	private MC_Core core;
 	private int serverID;
+	private MySQL SQL;
 	
 	public void setCore(MC_Core core) {
 		this.core = core;
@@ -27,4 +30,7 @@ public class MC_Core_Manager {
 		return MC_Core_Manager.getInstance().serverID;
 	}
 	
+	public void setMySQL(MySQL SQL) {
+		this.SQL = SQL;
+	}
 }
