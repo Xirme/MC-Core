@@ -45,7 +45,7 @@ public class MC_Core extends JavaPlugin {
 		try {
 			MC_Core_Manager.getInstance().setMySQL(new MySQL(host, user, pass, database, port, this));
 		} catch (Exception e) {
-			this.yFail("FUCKING WINDOWS 98! Why? \n\n", e);
+			this.yFail("SQL dun goof'd. \n\n", e);
 		}
 		
 		MC_Core_Manager.getInstance().setServerID(this.serverid);
