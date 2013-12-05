@@ -55,7 +55,7 @@ public class MC_Core extends JavaPlugin {
 		MC_Core_Manager.getInstance().setServerID(this.serverid);
 		log.info("[MC-Core] is online.");
 		
-		if (MySQL.checkConnection() == true) {
+		if (MySQL.checkConnection() != true) {
 				log.info("Connection to MySQL was successful.");
 		} else {
 			log.warning("Something went wrong with MySQL.");
