@@ -8,14 +8,14 @@ import java.sql.Statement;
 import me.xir.mc.plugin.core.MC_Core;
 
 public class MySQL {
-	private MC_Core plugin = new MC_Core();
+	private MC_Core plugin;
 	private Connector connector;
 	
-	protected String host = plugin.config.getString("mysql.host");
-	protected String user = plugin.config.getString("mysql.user");
-	protected String pass = plugin.config.getString("mysql.pass");
-	protected String database = plugin.config.getString("mysql.database");
-	protected Integer port = plugin.config.getInt("mysql.port");
+	protected String host = plugin.getConfig().getString("mysql.host");
+	protected String user = plugin.getConfig().getString("mysql.user");
+	protected String pass = plugin.getConfig().getString("mysql.pass");
+	protected String database = plugin.getConfig().getString("mysql.database");
+	protected Integer port = plugin.getConfig().getInt("mysql.port");
 
 	public MySQL(String host, String user, String pass, String database, Integer port, MC_Core plugin) throws ClassNotFoundException, SQLException {
 		this.host = host;
