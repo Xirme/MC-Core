@@ -16,24 +16,15 @@ public class MC_Core extends JavaPlugin {
 	public FileConfiguration config;
 	public Integer serverid;
 	
-	final String host;
-	final String user;
-	final String password;
-	final String database;;
-	final Integer port;
+	String host;
+	String user;
+	String password;
+	String database;;
+	Integer port;
 	
 	MySQL sql;
 	
 	Connection conn = null;
-	
-	public MC_Core(/*Any params on new instance of this be put here */){
-		this.host = this.config.getString("mysql.host");
-		this.user = this.config.getString("mysql.user");
-		this.password = this.config.getString("mysql.pass");
-		this.database = this.config.getString("mysql.database"); 
-		this.port = this.config.getInt("mysql.port");
-		this.sql = new MySQL(this, host, port, database, user, password);
-	}
 	
 	public void yFail(String reason) {
 		this.yFail(reason, null);
@@ -55,6 +46,7 @@ public class MC_Core extends JavaPlugin {
 	public void onEnable() {
 		MC_Core_Manager.getInstance().setCore(this);
 		loadConfiguration();
+		createConnection();
 		
 		try {
 			conn = sql.openConnection();
@@ -70,8 +62,9 @@ public class MC_Core extends JavaPlugin {
 		} else {
 			log.warning("Something went wrong with MySQL.");
 		}
+		
 	}
-	
+
 	public void loadConfiguration() {
 		File f = new File(this.getDataFolder(), "config.yml");
 		if (!f.exists()) {
@@ -85,6 +78,15 @@ public class MC_Core extends JavaPlugin {
 			this.serverid = this.config.getInt("general.server-id");
 			log.info("This server's ID is " + serverid + ".");
 		}
+	}
+	
+	public void createConnection() {
+		this.host = this.config.getString("mysql.host");
+		this.user = this.config.getString("mysql.user");
+		this.password = this.config.getString("mysql.pass");
+		this.database = this.config.getString("mysql.database"); 
+		this.port = this.config.getInt("mysql.port");
+		this.sql = new MySQL(this, host, port, database, user, password);
 	}
 	
 }
