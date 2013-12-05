@@ -33,4 +33,8 @@ public class MC_Core_Manager {
 	public void setMySQL(MySQL SQL) {
 		this.SQL = SQL;
 	}
+	
+	public static MySQL getMySQL() {
+		return MC_Core_Manager.getInstance().SQL;
+	}
 }

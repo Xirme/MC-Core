@@ -1,6 +1,9 @@
 package me.xir.mc.plugin.core;
 
 import java.io.File;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.Statement;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -38,14 +41,14 @@ public class MC_Core extends JavaPlugin {
 		
 		final String host = this.config.getString("mysql.host");
 		final String user = this.config.getString("mysql.user");
-		final String pass = this.config.getString("mysql.pass");
+		final String password = this.config.getString("mysql.pass");
 		final String database = this.config.getString("mysql.database");
 		final Integer port = this.config.getInt("mysql.port");
 		
 		try {
-			MC_Core_Manager.getInstance().setMySQL(new MySQL(host, user, pass, database, port, this));
-		} catch (Exception e) {
-			this.yFail("SQL dun goof'd. \n\n", e);
+			MC_Core_Manager.getInstance().setMySQL(new MySQL(this, host, port, database, user, password));
+		} catch (Exception ex) {
+			this.yFail("SQL dun goof'd. \n\n", ex);
 		}
 		
 		MC_Core_Manager.getInstance().setServerID(this.serverid);

@@ -1,55 +1,123 @@
 package me.xir.mc.plugin.core.MySQL;
 
 import java.sql.Connection;
-import java.sql.PreparedStatement;
+import java.sql.DriverManager;
+import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.logging.Level;
 
 import me.xir.mc.plugin.core.MC_Core;
 
-public class MySQL {
-	private MC_Core plugin;
-	private Connector connector;
-	
-	protected String host;
-	protected String user;
-	protected String pass;
-	protected String database;
-	protected Integer port;
+/**
+ * Handles connection to database
+ * @author Cyberpew
+ *
+ */
 
-	public MySQL(String host, String user, String pass, String database, Integer port, MC_Core plugin) throws ClassNotFoundException, SQLException {
+public class MySQL extends ConnectionHandler {
+	
+	private final String user;
+	private final String database;
+	private final String password;
+	private final String host;
+	private final Integer port;
+
+	private Connection connection;
+	
+	public MySQL(MC_Core plugin, String host, Integer port, String database, String user, String password) {
+		super(plugin);
 		this.host = host;
-		this.user = user;
-		this.pass = pass;
-		this.database = database;
 		this.port = port;
-		this.plugin = plugin;
-		
-		Class.forName("com.mysql.jdbc.Driver");
-		connector = new Connector("jdbc:mysql://" + this.host + ":" + this.port + "/" + this.database + "?autoReconnect=true&user=" + this.user + "&password=" + this.pass);
-		
-		this.plugin.getServer().getScheduler().scheduleSyncRepeatingTask(plugin, new Runnable() {
-			
-			@Override
-			public void run() {
-				connector.resetLoad();
+		this.database = database;
+		this.user = user;
+		this.password = password;
+		this.connection = null;
+	}
+	
+	@Override
+	public Connection openConnection() {
+		try {
+			Class.forName("com.mysql.jdbc.Driver");
+			connection = DriverManager.getConnection("jdbc:mysql://" + this.host + ":" + this.port + "/" + this.database + "?autoReconnect=true&user=" + this.user + "&password=" + this.password);
+		} catch (SQLException ex) {
+			plugin.getLogger().log(Level.SEVERE, "Connection to MySQL failed due to: " + ex.getMessage());
+		} catch (ClassNotFoundException ex) {
+			plugin.getLogger().log(Level.SEVERE, "JDVC driver does not exist!");
+		}
+		return connection;
+	}
+	
+	@Override
+	public boolean checkConnection() {
+		return connection != null;
+	}
+	
+	@Override
+	public Connection getConnection() {
+		return connection;
+	}
+	
+	@Override
+	public void closeConnection() {
+		if (connection != null) {
+			try {
+				connection.close();
+			} catch (SQLException ex) {
+				plugin.getLogger().log(Level.SEVERE, "MySQL connection failed to close.");
+				ex.printStackTrace();
 			}
-		}, 100, 100);
+		}
 	}
 	
-	public PreparedStatement getPreparedStatementFromOven(String query) throws SQLException {
-		return connector.getConnection().prepareStatement(query);
+	public ResultSet sqlQuery(String query) {
+		Connection conn = null;
+		
+		if (checkConnection()) {
+			conn = getConnection();
+		} else {
+			conn = openConnection();
+		}
+		
+		Statement s = null;
+		
+		try {
+			s = conn.createStatement();
+		} catch (SQLException ex) {
+			ex.printStackTrace();
+		}
+		
+		ResultSet rs = null;
+		
+		try {
+			rs = s.executeQuery(query);
+		} catch (SQLException ex) {
+			ex.printStackTrace();
+		}
+		
+		closeConnection();
+		
+		return rs;
 	}
 	
-	public PreparedStatement getPreparedStatementsKeys(String query) throws SQLException {
-		return connector.getConnection().prepareStatement(query, Statement.RETURN_GENERATED_KEYS);
-	}
-	
-	public Connection getConnection() throws SQLException {
-		return connector.getConnection();
-	}
-	
-	public Connector getPool() {
-		return connector;
+	public void sqlUpdate(String update) {
+		Connection conn = null;
+		
+		if (checkConnection()) {
+			conn = getConnection();
+		} else {
+			conn = openConnection();
+		}
+		
+		Statement s = null;
+		
+		try {
+			s = conn.createStatement();
+			s.executeUpdate(update);
+		} catch (SQLException ex) {
+			ex.printStackTrace();
+		}
+		
+		closeConnection();
 	}
 }
