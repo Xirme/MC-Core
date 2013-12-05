@@ -58,9 +58,9 @@ public class MC_Core extends JavaPlugin {
 		log.info("[MC-Core] is online.");
 		
 		if (sql.checkConnection() != true) {
-			log.warning("Something went wrong with MySQL.");
+			log.warning("[MC-Core] Something went wrong with MySQL.");
 		} else {
-			log.info("Connection to MySQL was successful.");
+			log.info("[MC-Core] Connection to MySQL was successful.");
 		}
 		
 	}
