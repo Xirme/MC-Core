@@ -1,9 +1,7 @@
 package me.xir.mc.plugin.core;
 
 import java.io.File;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.Statement;
+import java.sql.Connection;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -45,8 +43,11 @@ public class MC_Core extends JavaPlugin {
 		final String database = this.config.getString("mysql.database");
 		final Integer port = this.config.getInt("mysql.port");
 		
+		MySQL MySQL = new MySQL(this, host, port, database, user, password);
+		Connection conn  = null;
+		
 		try {
-			MC_Core_Manager.getInstance().setMySQL(new MySQL(this, host, port, database, user, password));
+			conn = MySQL.openConnection();
 		} catch (Exception ex) {
 			this.yFail("SQL dun goof'd. \n\n", ex);
 		}
