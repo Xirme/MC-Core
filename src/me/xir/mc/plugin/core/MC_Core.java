@@ -48,12 +48,15 @@ public class MC_Core extends JavaPlugin {
 		
 		try {
 			conn = MySQL.openConnection();
+			log.info("[MC-Core] connected to MySQL.");
 		} catch (Exception ex) {
 			this.yFail("SQL dun goof'd. \n\n", ex);
 		}
 		
 		MC_Core_Manager.getInstance().setServerID(this.serverid);
 		log.info("[MC-Core] is online.");
+		
+		
 	}
 	
 	public void loadConfiguration() {
