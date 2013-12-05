@@ -1,2 +1,8 @@
 general:
     server-id: SERVER_ID_HERE
+mysql:
+    host: localhost
+    port: 3306
+    user: creeper
+    pass: password
+    database: minecraft
