@@ -26,7 +26,7 @@ public class MySQL {
 		this.plugin = plugin;
 		
 		Class.forName("com.mysql.jdbc.Driver");
-		connector = new Connector(this.host + this.database + "?autoReconnect=true&user=" + this.user + "&password=" + this.pass);
+		connector = new Connector("jdbc:mysql//" + this.host + ":" + this.port + "/" + this.database + "?autoReconnect=true&user=" + this.user + "&password=" + this.pass);
 		
 		this.plugin.getServer().getScheduler().scheduleSyncRepeatingTask(plugin, new Runnable() {
 			
