@@ -48,7 +48,6 @@ public class MC_Core extends JavaPlugin {
 		
 		try {
 			conn = MySQL.openConnection();
-			log.info("[MC-Core] connected to MySQL.");
 		} catch (Exception ex) {
 			this.yFail("SQL dun goof'd. \n\n", ex);
 		}
