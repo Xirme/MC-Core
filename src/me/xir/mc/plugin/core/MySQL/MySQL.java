@@ -11,11 +11,11 @@ public class MySQL {
 	private MC_Core plugin;
 	private Connector connector;
 	
-	protected String host = plugin.getConfig().getString("mysql.host");
-	protected String user = plugin.getConfig().getString("mysql.user");
-	protected String pass = plugin.getConfig().getString("mysql.pass");
-	protected String database = plugin.getConfig().getString("mysql.database");
-	protected Integer port = plugin.getConfig().getInt("mysql.port");
+	protected String host;
+	protected String user;
+	protected String pass;
+	protected String database;
+	protected Integer port;
 
 	public MySQL(String host, String user, String pass, String database, Integer port, MC_Core plugin) throws ClassNotFoundException, SQLException {
 		this.host = host;
