@@ -35,7 +35,7 @@ public class MC_Core extends JavaPlugin {
 	final String database = this.config.getString("mysql.database");
 	final Integer port = this.config.getInt("mysql.port");
 	
-	MySQL MySQL = new MySQL(this, host, port, database, user, password);
+	MySQL sql = new MySQL(this, host, port, database, user, password);
 	Connection conn  = null;
 	
 	public void onDisable() {
@@ -47,7 +47,7 @@ public class MC_Core extends JavaPlugin {
 		loadConfiguration();
 		
 		try {
-			conn = MySQL.openConnection();
+			conn = sql.openConnection();
 		} catch (Exception ex) {
 			this.yFail("SQL dun goof'd. \n\n", ex);
 		}
@@ -55,7 +55,7 @@ public class MC_Core extends JavaPlugin {
 		MC_Core_Manager.getInstance().setServerID(this.serverid);
 		log.info("[MC-Core] is online.");
 		
-		if (MySQL.checkConnection() != true) {
+		if (sql.checkConnection() != true) {
 				log.info("Connection to MySQL was successful.");
 		} else {
 			log.warning("Something went wrong with MySQL.");
