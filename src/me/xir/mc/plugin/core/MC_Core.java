@@ -16,6 +16,25 @@ public class MC_Core extends JavaPlugin {
 	public FileConfiguration config;
 	public Integer serverid;
 	
+	final String host;
+	final String user;
+	final String password;
+	final String database;;
+	final Integer port;
+	
+	MySQL sql;
+	
+	Connection conn = null;
+	
+	public MC_Core(/*Any params on new instance of this be put here */){
+		this.host = this.config.getString("mysql.host");
+		this.user = this.config.getString("mysql.user");
+		this.password = this.config.getString("mysql.pass");
+		this.database = this.config.getString("mysql.database"); 
+		this.port = this.config.getInt("mysql.port");
+		this.sql = new MySQL(this, host, port, database, user, password);
+	}
+	
 	public void yFail(String reason) {
 		this.yFail(reason, null);
 	}
@@ -28,15 +47,6 @@ public class MC_Core extends JavaPlugin {
 		}
 		this.getServer().getPluginManager().disablePlugin(this);
 	}
-	
-	final String host = this.config.getString("mysql.host");
-	final String user = this.config.getString("mysql.user");
-	final String password = this.config.getString("mysql.pass");
-	final String database = this.config.getString("mysql.database");
-	final Integer port = this.config.getInt("mysql.port");
-	
-	MySQL sql = new MySQL(this, host, port, database, user, password);
-	Connection conn  = null;
 	
 	public void onDisable() {
 		log.info("[MC-Core] has gone offline.");
