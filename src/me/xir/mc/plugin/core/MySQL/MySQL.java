@@ -43,7 +43,7 @@ public class MySQL extends ConnectionHandler {
 		} catch (SQLException ex) {
 			plugin.getLogger().log(Level.SEVERE, "Connection to MySQL failed due to: " + ex.getMessage());
 		} catch (ClassNotFoundException ex) {
-			plugin.getLogger().log(Level.SEVERE, "JDVC driver does not exist!");
+			plugin.getLogger().log(Level.SEVERE, "JDBC driver does not exist!");
 		}
 		return connection;
 	}
